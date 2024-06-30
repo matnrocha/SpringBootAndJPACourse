@@ -1,10 +1,7 @@
 package com.mateus.springproject;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FirstController {
@@ -16,8 +13,15 @@ public class FirstController {
 
     @PostMapping("/post")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public String post(String message){
-        return "Request accepted in post!";
+    public String post(@RequestBody String message){
+        return "Request accepted in post: " + message;
+    }
+
+    @PostMapping("/post-order")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String post(@RequestBody Order order){
+        String response = "Request accepted in post-order: " + order.getProductName() + order.getCustomerName() + order.getQuantity();
+        return response;
     }
 
 
