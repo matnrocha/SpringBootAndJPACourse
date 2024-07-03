@@ -3,43 +3,35 @@ package com.mateus.springproject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class FirstController {
-    @GetMapping("")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String sayHello(){
-        return "Hello from first controller";
+    private final StudentRepository studentRepository;
+
+    public FirstController(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
-    @PostMapping("/post")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String post(@RequestBody String message){
-        return "Request accepted in post: " + message;
+    @PostMapping("/students")
+    public Student saveStudent(@RequestBody Student student){
+        System.out.println(student.getAge());
+        Student studentSaved = studentRepository.save(student);
+        System.out.println(studentSaved.getId());
+        return studentSaved;
     }
 
-    @PostMapping("/post-order")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String post(@RequestBody Order order){
-        return "Request accepted in post-order: " + order.getProductName() + order.getCustomerName() + order.getQuantity();
+    @GetMapping("/students")
+    public List<Student> findAllStudents(){
+        return studentRepository.findAll();
     }
 
-
-    // http://localhost:8080/hello/{username}
-    @GetMapping("/hello/{username}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String pathVar(@PathVariable("username") String username){
-        return "Request accepted in post-order: " + username;
+    @GetMapping("/students/{studentId}")
+    public Student findStudentById(
+            @PathVariable("studentId") Integer studentId
+    ){
+        return studentRepository.findById(studentId)
+                .orElse(null);
     }
-
-    // http://localhost:8080/hello?param1=value1&param2=value2
-    @GetMapping("/hello")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public String RequestParam(@RequestParam("firstName") String firstName,
-                          @RequestParam("lastName") String lastName){
-        return "Request accepted in post-order: " + firstName + " " + lastName;
-    }
-
-
-
 
 }

@@ -4,11 +4,11 @@ package com.mateus.springproject;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "TB_STUDENT")
+@Table(name = "student")
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(
             name = "c_fname",
             length = 20
@@ -36,7 +36,7 @@ public class Student {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
