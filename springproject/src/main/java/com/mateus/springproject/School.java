@@ -1,5 +1,6 @@
 package com.mateus.springproject;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class School {
             mappedBy = "school",
             cascade = CascadeType.ALL
     )
+    @JsonManagedReference       //plus @JsonBackReference prevents infinite looping
     private List<Student> students;
 
     public School() {
@@ -49,4 +51,6 @@ public class School {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+
+
 }

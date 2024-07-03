@@ -1,6 +1,7 @@
 package com.mateus.springproject;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,6 +21,7 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "school_id")
+    @JsonBackReference
     private School school;
 
     public Student() {
@@ -79,5 +81,13 @@ public class Student {
 
     public void setProfile(StudentProfile profile) {
         this.profile = profile;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 }
