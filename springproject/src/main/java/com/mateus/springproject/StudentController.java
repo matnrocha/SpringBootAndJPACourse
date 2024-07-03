@@ -13,12 +13,31 @@ public class StudentController {
         this.studentRepository = studentRepository;
     }
 
+    private Student ToStudent(StudentDto dto){
+        var student = new Student();
+        student.setFirstName(dto.firstName());
+        student.setLastName(dto.lastName());
+        student.setEmail(dto.email());
+
+        var school = new School();
+        school.setId(dto.schoolId());
+
+        student.setSchool(school);
+        return student;
+    }
+
+    private StudentResponseDto toStudentResponseDto(Student student){
+        return new StudentResponseDto(
+                student.getFirstName(),
+                student.getLastName(),
+                student.getEmail()
+        );
+    }
     @PostMapping("/students")
-    public Student saveStudent(@RequestBody Student student){
-        System.out.println(student.getAge());
-        Student studentSaved = studentRepository.save(student);
-        System.out.println(studentSaved.getId());
-        return studentSaved;
+    public StudentResponseDto saveStudent(@RequestBody StudentDto dto){
+        var student = ToStudent(dto);
+        var savedStudent = studentRepository.save(student);
+        return toStudentResponseDto(savedStudent);
     }
 
     @GetMapping("/students")
