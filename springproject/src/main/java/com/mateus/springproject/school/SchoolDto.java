@@ -1,4 +1,4 @@
-package com.mateus.springproject;
+package com.mateus.springproject.school;
 
 public record SchoolDto(
         String name

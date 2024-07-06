@@ -1,5 +1,6 @@
-package com.mateus.springproject;
+package com.mateus.springproject.studentProfile;
 
+import com.mateus.springproject.student.Student;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,5 +1,6 @@
-package com.mateus.springproject;
+package com.mateus.springproject.student;
 
+import com.mateus.springproject.school.School;
 import org.springframework.stereotype.Service;
 
 @Service

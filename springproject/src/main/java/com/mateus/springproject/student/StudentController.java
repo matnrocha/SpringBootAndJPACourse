@@ -1,4 +1,4 @@
-package com.mateus.springproject;
+package com.mateus.springproject.student;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

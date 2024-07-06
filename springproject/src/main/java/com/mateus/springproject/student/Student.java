@@ -1,7 +1,9 @@
-package com.mateus.springproject;
+package com.mateus.springproject.student;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.mateus.springproject.studentProfile.StudentProfile;
+import com.mateus.springproject.school.School;
 import jakarta.persistence.*;
 
 @Entity
