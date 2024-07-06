@@ -7,63 +7,41 @@ import java.util.List;
 
 @RestController
 public class StudentController {
-    private final StudentRepository studentRepository;
 
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
-    private Student ToStudent(StudentDto dto){
-        var student = new Student();
-        student.setFirstName(dto.firstName());
-        student.setLastName(dto.lastName());
-        student.setEmail(dto.email());
-
-        var school = new School();
-        school.setId(dto.schoolId());
-
-        student.setSchool(school);
-        return student;
-    }
-
-    private StudentResponseDto toStudentResponseDto(Student student){
-        return new StudentResponseDto(
-                student.getFirstName(),
-                student.getLastName(),
-                student.getEmail()
-        );
-    }
     @PostMapping("/students")
     public StudentResponseDto saveStudent(@RequestBody StudentDto dto){
-        var student = ToStudent(dto);
-        var savedStudent = studentRepository.save(student);
-        return toStudentResponseDto(savedStudent);
+        return studentService.saveStudent(dto);
     }
 
     @GetMapping("/students")
-    public List<Student> findAllStudents(){
-        return studentRepository.findAll();
+    public List<StudentResponseDto> findAllStudents(){
+        return studentService.findAllStudents();
     }
 
     @GetMapping("/students/{studentId}")
-    public Student findStudentById(
+    public StudentResponseDto findStudentById(
             @PathVariable("studentId") Integer studentId
     ){
-        return studentRepository.findById(studentId)
-                .orElse(null);
+        return studentService.findStudentById(studentId);
     }
 
     @GetMapping("/students/search/{studentName}")
-    public List<Student> findAllStudentsByFirstName(
+    public List<StudentResponseDto> findAllStudentsByFirstName(
             @PathVariable("studentName") String studentName
     ){
-        return studentRepository.findAllByFirstNameContaining(studentName);
+        return studentService.findAllStudentsByFirstName(studentName);
     }
 
     @DeleteMapping("/students/{student-id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("student-id") Integer id){
-        studentRepository.deleteById(id);
+        studentService.delete(id);
     }
 
 
