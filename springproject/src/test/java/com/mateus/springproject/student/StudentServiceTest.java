@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class StudentServiceTest {
 
@@ -44,29 +44,38 @@ class StudentServiceTest {
                 21,
                 school
         );
+
+        Student savedStudent = new Student(
+                "mateus",
+                "rocha",
+                "mateus@gmail.com",
+                21,
+                school
+        );
         //Mock the calls
-        when(studentMapper.ToStudent(dto))
+        when(studentMapper.toStudent(dto))
                 .thenReturn(student);
         when(studentRepository.save(student))
-                .thenReturn(new Student(
-                        "mateus",
-                        "rocha",
-                        "mateus@gmail.com",
-                        21,
-                        school
-                ));
-        when(studentMapper.toStudentResponseDto(student))
+                .thenReturn(savedStudent);
+        when(studentMapper.toStudentResponseDto(savedStudent))
                 .thenReturn(new StudentResponseDto(
                         "mateus",
                         "rocha",
                         "mateus@gmail.com"
                 ));
         //When
-        StudentResponseDto responseDto = studentService.saveStudent(dto);
+        StudentResponseDto resp = studentService.saveStudent(dto);
         //Then
-        assertEquals(responseDto.firstName(), dto.firstName());
-        assertEquals(responseDto.lastName(), dto.lastName());
-        assertEquals(responseDto.email(), dto.email());
-        assertEquals(responseDto.firstName(), dto.firstName());
+        assertEquals(resp.firstName(), dto.firstName());
+        assertEquals(resp.lastName(), dto.lastName());
+        assertEquals(resp.email(), dto.email());
+        assertEquals(resp.firstName(), dto.firstName());
+        //Performance tests
+        verify(studentMapper, times(1))
+                .toStudent(dto);
+        verify(studentRepository, times(1))
+                .save(student);
+        verify(studentMapper, times(1))
+                .toStudentResponseDto(savedStudent);
     }
 }

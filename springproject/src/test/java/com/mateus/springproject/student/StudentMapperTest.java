@@ -23,7 +23,7 @@ class StudentMapperTest {
                 1
         );
 
-        Student student = mapper.ToStudent(dto);
+        Student student = mapper.toStudent(dto);
 
         assertEquals(dto.firstName(), student.getFirstName());
         assertEquals(dto.lastName(), student.getLastName());
@@ -56,7 +56,7 @@ class StudentMapperTest {
     @Test
     public void should_throw_NullPointerException_when_dto_is_null(){
         var exp = assertThrows(NullPointerException.class, () -> {
-            mapper.ToStudent(null);
+            mapper.toStudent(null);
         });
 
         assertEquals("dto should not be null", exp.getMessage());

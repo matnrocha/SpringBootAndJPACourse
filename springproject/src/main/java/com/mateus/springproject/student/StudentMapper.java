@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StudentMapper {
-    public Student ToStudent(StudentDto dto){
+    public Student toStudent(StudentDto dto){
         if(dto == null){
             throw new NullPointerException("dto should not be null");
         }
